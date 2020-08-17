@@ -35,7 +35,7 @@ namespace okta_blazor_server_side_example
             .AddCookie()
             .AddOktaMvc(new OktaMvcOptions
             {
-                // Replace these values with your Okta configuration
+                // Replace the Okta placeholders in appsettings.json with your Okta configuration.
                 OktaDomain = Configuration.GetValue<string>("Okta:OktaDomain"),
                 ClientId = Configuration.GetValue<string>("Okta:ClientId"),
                 ClientSecret = Configuration.GetValue<string>("Okta:ClientSecret"),
