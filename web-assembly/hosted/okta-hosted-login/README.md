@@ -42,7 +42,7 @@ Run the example with your preferred tool and write down the port of your web app
 
 #### Run the web application from Visual Studio
 
-If you run this project in Visual Studio it will start the web application on port 44314 using HTTPS. You can change this configuration in the `launchSettings.json`. 
+If you run this project in Visual Studio it will start the web application on port 44314 using HTTPS. You can change this configuration in the `launchSettings.json`. Make sure that `okta-blazor-web-assembly-example.Server` is selected as your startup project.
 
 #### Run the web application from dotnet CLI
 
