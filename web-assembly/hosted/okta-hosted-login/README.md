@@ -1,10 +1,10 @@
 # Hosted Blazor WebAssembly & Okta-Hosted Sign-In Page Example
 
-This example shows how to create a hosted Blazor WebAssembly application that uses Okta to authenticate users and API calls.
+This example demonstrates a hosted Blazor WebAssembly application that uses Okta to authenticate users and API calls.
 
 When the user clicks `Sign In` their browser is first redirected to the Okta-hosted sign-in page. After the user authenticates, they are redirected back to your application. Blazor automatically populates `AuthenticationState.User` with the information Okta sends back about the user. 
 
-Once the user is authenticated, they can access protected resources in your Server. In this example, if the user navigates to `/fetchdata` a `GET /WeatherForecast` request is made to fetch the data that is used to populate the page. The access token will be added to the request and validated by the Server. 
+Once the user is authenticated, they can access protected resources in your Server. In this example, if the user navigates to `/fetchdata` a `GET /WeatherForecast` request is made to fetch the data populates the page. The access token is added to the request and validated by the Server. 
 
 
 ## Prerequisites
@@ -12,23 +12,31 @@ Once the user is authenticated, they can access protected resources in your Serv
 Before running this example, you will need the following:
 
 * An Okta Developer Account, you can sign up for one at https://developer.okta.com/signup/.
-* An Okta Application, configured for Single-Page App (SPA) mode. This is done from the Okta Developer Console, you can see the [Create an Okta SPA application](#create-an-okta-spa-application) section for step-by-step instructions. When following the wizard, use the default properties. They are are designed to work with our sample applications.
+* An Okta Application, configured for Single-Page App (SPA) mode. This is done from the Okta Developer Console, see the [Create an Okta SPA application](#create-an-okta-spa-application) section for step-by-step instructions. When following the wizard, use the default properties. They are are designed to work with our sample applications.
 
 ## Create an Okta SPA application
 
-1. Select Applications, then Add Application. Pick Single-Page App (SPA) as the platform. Enter a name for your application (or leave the default value).
+This section describes the steps necessary to create an Okta SPA application from the Okta developer console. Sign into your developer console and perform the following steps:
 
-2. Add the Base URI of your application during local development, such as https://localhost:44314. Also, add any base URIs where your application runs in production, such as https://app.example.com.
+1. Select Applications, then Add Application. 
 
-3. Enter values for the Login redirect URI. Add values for local development (such as https://localhost:44314/authentication/login-callback) and production (such as https://app.example.com/authentication/login-callback).
+1. Pick Single-Page App (SPA) as the platform. 
 
-4. Enter values for the Logout redirect URI. Add values for local development (such as https://localhost:44314/authentication/logout-callback) and production (such as https://app.example.com/authentication/logout-callback).
+1. Enter a name for your application (or leave the default value).
 
-5. For Allowed grant types, check Authorization Code. This will enable PKCE flow for your application.
+1. Add the Base URI of your application during local development, such as https://localhost:44314. Also, add any base URIs where your application runs in production, such as https://app.example.com.
 
-6. Click Done to finish creating the Okta Application. You need to copy some values into your code later, so leave the Developer Console open.
+1. Enter values for the Login redirect URI. Add values for local development (such as https://localhost:44314/authentication/login-callback) and production (such as https://app.example.com/authentication/login-callback).
+
+1. Enter values for the Logout redirect URI. Add values for local development (such as https://localhost:44314/authentication/logout-callback) and production (such as https://app.example.com/authentication/logout-callback).
+
+1. For Allowed grant types, ensure "Authorization Code" is checked. This enables PKCE flow for your application.
+
+1. Click Done to finish creating the Okta Application. You need to copy your [Okta domain](https://developer.okta.com/docs/guides/find-your-domain/findorg/) and Client Id values into your code later, so leave the Developer Console open.
 
 ## Running This Example
+
+This section describes the available options for running this example.
 
 ### Clone this repository
 
@@ -59,7 +67,13 @@ This is because ASP.NET Core creates an HTTPS development certificate for you as
 
 ### Add your Okta configuration to the sample's appsettings
 
-Replace the okta configuration placeholders in the `appsettings.json` with your configuration values from the [Okta Developer Console]. In this example, since you have two different projects, `Client` (`wwwroot > appsettings.json`)  and `Server`, you have two different `appsettings.json` files to configure.
+#### Client
+
+Open the `appsettings.json` file located in the `wwwroot` folder and replace the Okta configuration placeholders with your with your configuration values from the [Okta Developer Console].
+
+#### Server
+
+Open the `appsettings.json` and replace the Okta configuration placeholders with your with your configuration values from the [Okta Developer Console].
 
 ### Run again and try to sign in
 
