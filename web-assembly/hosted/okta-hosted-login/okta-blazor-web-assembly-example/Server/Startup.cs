@@ -38,7 +38,8 @@ namespace okta_blazor_web_assembly_example.Server
             })
             .AddOktaWebApi(new OktaWebApiOptions()
             {
-                OktaDomain = "https://dotnet.oktapreview.com",
+                // Replace the Okta placeholders with your Okta values in the appsettings.json file.
+                OktaDomain = Configuration.GetValue<string>("Okta:OktaDomain"),
             });
 
             services.AddAuthorization();
