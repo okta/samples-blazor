@@ -73,7 +73,14 @@ Open the `appsettings.json` file located in the `wwwroot` folder and replace the
 
 #### Server
 
-Open the `appsettings.json` and replace the Okta configuration placeholders with your with your configuration values from the [Okta Developer Console].
+This Application is intended to work with one of our resource servers, for example [AspNet Core 3.x Samples Resource Server](https://github.com/okta/samples-aspnetcore/tree/master/samples-aspnetcore-3x/resource-server).
+The Server's base address and Message endpoint can be configured in the abovementioned `appsettings.json`. Default values are the following:
+```json 
+  "ServerApi": {
+    "BaseAddress": "http://localhost:8000",
+    "MessageEndpoint": "api/Messages"
+  }
+```
 
 ### Run again and try to sign in
 

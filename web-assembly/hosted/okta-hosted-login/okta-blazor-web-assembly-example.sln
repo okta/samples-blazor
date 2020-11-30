@@ -1,13 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30413.136
+VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "okta-blazor-web-assembly-example.Server", "okta-blazor-web-assembly-example\Server\okta-blazor-web-assembly-example.Server.csproj", "{7C00D74E-4DE8-4CEC-8719-BAA18280B991}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "okta-blazor-web-assembly-example.Client", "okta-blazor-web-assembly-example\Client\okta-blazor-web-assembly-example.Client.csproj", "{273829DC-0AE6-4D36-ABAB-2C6595FC5642}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "okta-blazor-web-assembly-example.Shared", "okta-blazor-web-assembly-example\Shared\okta-blazor-web-assembly-example.Shared.csproj", "{F08FFB37-A75D-48D9-96B1-4D251A996B4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "okta-blazor-web-assembly-example", "okta-blazor-web-assembly-example\okta-blazor-web-assembly-example.csproj", "{BC7C5169-F725-4447-9D7A-30F635E05EBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,23 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7C00D74E-4DE8-4CEC-8719-BAA18280B991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C00D74E-4DE8-4CEC-8719-BAA18280B991}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C00D74E-4DE8-4CEC-8719-BAA18280B991}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C00D74E-4DE8-4CEC-8719-BAA18280B991}.Release|Any CPU.Build.0 = Release|Any CPU
-		{273829DC-0AE6-4D36-ABAB-2C6595FC5642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{273829DC-0AE6-4D36-ABAB-2C6595FC5642}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{273829DC-0AE6-4D36-ABAB-2C6595FC5642}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{273829DC-0AE6-4D36-ABAB-2C6595FC5642}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F08FFB37-A75D-48D9-96B1-4D251A996B4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F08FFB37-A75D-48D9-96B1-4D251A996B4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F08FFB37-A75D-48D9-96B1-4D251A996B4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F08FFB37-A75D-48D9-96B1-4D251A996B4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC7C5169-F725-4447-9D7A-30F635E05EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC7C5169-F725-4447-9D7A-30F635E05EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC7C5169-F725-4447-9D7A-30F635E05EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC7C5169-F725-4447-9D7A-30F635E05EBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7192E8F0-70E6-407D-873D-C8D580DA14F8}
+		SolutionGuid = {6BDE047C-9C04-4E49-8E36-CFF9D26F9B0A}
 	EndGlobalSection
 EndGlobal
