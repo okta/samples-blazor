@@ -1,10 +1,10 @@
-# Hosted Blazor WebAssembly & Okta-Hosted Sign-In Page Example
+# Blazor WebAssembly & Okta-Hosted Sign-In Page Example
 
-This example demonstrates a hosted Blazor WebAssembly application that uses Okta to authenticate users and API calls.
+This example demonstrates a Blazor WebAssembly application that uses Okta to authenticate users and API calls.
 
 When the user clicks `Sign In` their browser is first redirected to the Okta-hosted sign-in page. After the user authenticates, they are redirected back to your application. Blazor automatically populates `AuthenticationState.User` with the information Okta sends back about the user. 
 
-Once the user is authenticated, they can access protected resources in your Server. In this example, if the user navigates to `/fetchdata` a `GET /WeatherForecast` request is made to fetch the data populates the page. The access token is added to the request and validated by the Server. 
+Once the user is authenticated, they can access protected resources in your Server. In this example, if the user navigates to `/messages` a `GET /api/Messages` request is made to fetch the data populates the page. The access token is added to the request and validated by the Server. 
 
 
 ## Prerequisites
@@ -78,7 +78,7 @@ The Server's base address and Message endpoint can be configured in the abovemen
 ```json 
   "ServerApi": {
     "BaseAddress": "http://localhost:8000",
-    "MessageEndpoint": "api/Messages"
+    "MessagesEndpoint": "api/Messages"
   }
 ```
 
@@ -95,3 +95,9 @@ You can sign in with the same account that you created when signing up for your 
 [Enforce HTTPS in ASP.NET Core]: https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-2.2&tabs=visual-studio
 [Configuring HTTPS in ASP.NET Core across different platforms]:https://devblogs.microsoft.com/aspnet/configuring-https-in-asp-net-core-across-different-platforms/
 [Okta Developer Console]: https://login.okta.com
+
+## Troubleshooting
+
+You may need to restore NuGet packages to build the solution the first time. This can be done with the command:
+
+```dotnet restore```
