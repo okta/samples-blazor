@@ -14,13 +14,13 @@ namespace okta_blazor_web_assembly_example
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            //- For cross-domain requests to Api Server:
+            //- For cross-domain requests to Api Server use this piece of code:
             builder.Services.AddScoped<CorsRequestAuthorizationMessageHandler>(); 
             builder.Services
                 .AddHttpClient("BlazorClient.ServerApi", client => client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ServerApi:BaseAddress")))
                 .AddHttpMessageHandler<CorsRequestAuthorizationMessageHandler>();
             
-            //- Otherwise use the following instead:
+            //- For same domain requests use the following code instead:
             //builder.Services
             //    .AddHttpClient("BlazorClient.ServerApi", client => client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ServerApi:BaseAddress")))
             //    .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();

@@ -25,10 +25,11 @@ else
     <tbody>
         @foreach (var message in serverMessages.Messages)
         {
-<tr>
-    <td>@message.Date.ToShortDateString()</td>
-    <td>@message.Text</td>
-</tr>}
+            <tr>
+                <td>@message.Date.ToShortDateString()</td>
+                <td>@message.Text</td>
+            </tr>
+        }
     </tbody>
 </table>}
 
