@@ -1,4 +1,4 @@
-@page "/fetchdata"
+@page "/messages"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Microsoft.Extensions.Configuration
@@ -6,7 +6,7 @@
 @inject IHttpClientFactory ClientFactory
 @inject IConfiguration Configuration
 
-<h1>Server speaks</h1>
+<h1>Server messages</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
@@ -41,7 +41,7 @@ else
         var httpClient = ClientFactory.CreateClient("BlazorClient.ServerApi");
         try
         {
-            serverMessages = await httpClient.GetFromJsonAsync<ServerMessages>(Configuration["ServerApi:MessageEndpoint"]);
+            serverMessages = await httpClient.GetFromJsonAsync<ServerMessages>(Configuration["ServerApi:MessagesEndpoint"]);
         }
         catch (AccessTokenNotAvailableException exception)
         {
