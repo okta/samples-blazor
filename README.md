@@ -1,5 +1,6 @@
 # Blazor Sample Applications for Okta
 
+
 This repository contains several sample applications that demonstrate how to integrate various Okta use-cases into your Blazor applications.
 
 Please find the sample that fits your use-case from the table below.
