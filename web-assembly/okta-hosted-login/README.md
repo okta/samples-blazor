@@ -1,10 +1,10 @@
-# Hosted Blazor WebAssembly & Okta-Hosted Sign-In Page Example
+# Blazor WebAssembly & Okta-Hosted Sign-In Page Example
 
-This example demonstrates a hosted Blazor WebAssembly application that uses Okta to authenticate users and API calls.
+This example demonstrates a Blazor WebAssembly application that uses Okta to authenticate users and API calls.
 
 When the user clicks `Sign In` their browser is first redirected to the Okta-hosted sign-in page. After the user authenticates, they are redirected back to your application. Blazor automatically populates `AuthenticationState.User` with the information Okta sends back about the user. 
 
-Once the user is authenticated, they can access protected resources in your Server. In this example, if the user navigates to `/fetchdata` a `GET /WeatherForecast` request is made to fetch the data populates the page. The access token is added to the request and validated by the Server. 
+Once the user is authenticated, they can access protected resources in your Server. In this example, if the user navigates to `/messages` a `GET /api/Messages` request is made to fetch the data populates the page. The access token is added to the request and validated by the Server. 
 
 
 ## Prerequisites
@@ -50,7 +50,7 @@ Run the example with your preferred tool and write down the port of your web app
 
 #### Run the web application from Visual Studio
 
-If you run this project in Visual Studio it will start the web application on port 44314 using HTTPS. You can change this configuration in the `launchSettings.json`. Make sure that `okta-blazor-web-assembly-example.Server` is selected as your startup project.
+If you run this project in Visual Studio it will start the web application on port 44314 using HTTPS. You can change this configuration in the `launchSettings.json`. 
 
 #### Run the web application from dotnet CLI
 
@@ -73,7 +73,14 @@ Open the `appsettings.json` file located in the `wwwroot` folder and replace the
 
 #### Server
 
-Open the `appsettings.json` and replace the Okta configuration placeholders with your with your configuration values from the [Okta Developer Console].
+This Application is intended to work with one of our resource servers, for example [AspNet Core 3.x Samples Resource Server](https://github.com/okta/samples-aspnetcore/tree/master/samples-aspnetcore-3x/resource-server).
+The Server's base address and Message endpoint can be configured in the abovementioned `appsettings.json`. Default values are the following:
+```json 
+  "ServerApi": {
+    "BaseAddress": "http://localhost:8000",
+    "MessagesEndpoint": "api/Messages"
+  }
+```
 
 ### Run again and try to sign in
 
@@ -88,3 +95,9 @@ You can sign in with the same account that you created when signing up for your 
 [Enforce HTTPS in ASP.NET Core]: https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-2.2&tabs=visual-studio
 [Configuring HTTPS in ASP.NET Core across different platforms]:https://devblogs.microsoft.com/aspnet/configuring-https-in-asp-net-core-across-different-platforms/
 [Okta Developer Console]: https://login.okta.com
+
+## Troubleshooting
+
+You may need to restore NuGet packages to build the solution the first time. This can be done with the command:
+
+```dotnet restore```
