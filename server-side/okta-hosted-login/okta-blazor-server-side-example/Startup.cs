@@ -39,6 +39,7 @@ namespace okta_blazor_server_side_example
                 OktaDomain = Configuration.GetValue<string>("Okta:OktaDomain"),
                 ClientId = Configuration.GetValue<string>("Okta:ClientId"),
                 ClientSecret = Configuration.GetValue<string>("Okta:ClientSecret"),
+                AuthorizationServerId = Configuration.GetValue<string>("Okta:AuthorizationServerId"),
             });
         }
 
