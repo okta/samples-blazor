@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Okta.AspNetCore;
@@ -30,8 +29,8 @@ namespace okta_blazor_server_side_example.Controllers
                 new AuthenticationProperties() { RedirectUri = Url.Content("~/") },
                 new[]
                 {
-                     OktaDefaults.MvcAuthenticationScheme,
-                     CookieAuthenticationDefaults.AuthenticationScheme,
+                    OktaDefaults.MvcAuthenticationScheme,
+                    CookieAuthenticationDefaults.AuthenticationScheme,
                 });
         }
     }
