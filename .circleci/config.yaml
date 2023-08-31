@@ -4,6 +4,7 @@ orbs:
   general-platform-helpers: okta/general-platform-helpers
 
 workflows:
+  # See OKTA-624620
   semgrep:
     jobs:
       - general-platform-helpers/job-semgrep-prepare:
