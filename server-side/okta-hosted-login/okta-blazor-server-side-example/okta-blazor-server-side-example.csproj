@@ -9,6 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Okta.AspNetCore" Version="4.6.0" />
+    <PackageReference Include="Okta.AspNetCore" Version="4.6.1" />
   </ItemGroup>
 </Project>
