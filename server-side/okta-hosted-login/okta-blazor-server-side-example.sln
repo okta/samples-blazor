@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.4.33103.184
+VisualStudioVersion = 17.10.34707.107
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "okta-blazor-server-side-example", "okta-blazor-server-side-example\okta-blazor-server-side-example.csproj", "{58220544-0DA7-4F8B-8617-62CF1F5709A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "okta-blazor-server-side-example", "okta-blazor-server-side-example\okta-blazor-server-side-example.csproj", "{82B2D8D5-403C-42C3-AEAD-4AAD216D884F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{58220544-0DA7-4F8B-8617-62CF1F5709A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58220544-0DA7-4F8B-8617-62CF1F5709A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58220544-0DA7-4F8B-8617-62CF1F5709A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58220544-0DA7-4F8B-8617-62CF1F5709A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82B2D8D5-403C-42C3-AEAD-4AAD216D884F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82B2D8D5-403C-42C3-AEAD-4AAD216D884F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82B2D8D5-403C-42C3-AEAD-4AAD216D884F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82B2D8D5-403C-42C3-AEAD-4AAD216D884F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B3B8C6DE-B60D-4CFE-A189-526E91EA7434}
+		SolutionGuid = {F73BDD76-BFA5-40FB-9F68-0B669CF8F66D}
 	EndGlobalSection
 EndGlobal
