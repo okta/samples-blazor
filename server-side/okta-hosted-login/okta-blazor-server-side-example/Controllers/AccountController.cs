@@ -8,6 +8,7 @@ namespace okta_blazor_server_side_example.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         public IActionResult SignIn([FromQuery] string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -33,5 +34,6 @@ namespace okta_blazor_server_side_example.Controllers
                     CookieAuthenticationDefaults.AuthenticationScheme,
                 });
         }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 }

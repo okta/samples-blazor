@@ -1,22 +1,21 @@
+using okta_blazor_server_side_example.Components;
+using Okta.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Okta.AspNetCore;
-
-using okta_blazor_server_side_example.Data;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+
+// Add Okta Auth:
 builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-    })
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+})
     .AddCookie()
     .AddOktaMvc(new OktaMvcOptions
     {
@@ -26,13 +25,15 @@ builder.Services.AddAuthentication(options =>
         ClientSecret = builder.Configuration.GetValue<string>("Okta:ClientSecret"),
         AuthorizationServerId = builder.Configuration.GetValue<string>("Okta:AuthorizationServerId"),
     });
+// To pick up AccountController:
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -40,14 +41,15 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+app.UseAntiforgery();
 
-app.UseRouting();
-
+// Add AuthN and AuthR, configured to Okta above:
 app.UseAuthentication();
 app.UseAuthorization();
-
+// To pick up AccountController:
 app.MapControllers();
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
+
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 
 app.Run();
