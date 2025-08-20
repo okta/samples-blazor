@@ -7,6 +7,8 @@ orbs:
 
 jobs:
   reversing-labs:
+    docker:
+      - image: cimg/dotnet:6.0
     steps:
       - checkout
   
@@ -18,39 +20,42 @@ jobs:
             dotnet build ./server-side/okta-hosted-login/okta-blazor-server-side-example.sln &&
             dotnet build ./web-assembly/okta-hosted-login/okta_blazor_web_assembly_example.sln 
 
-       
-      // Necessary to Install rl wrapper   
+      # Necessary to Install rl wrapper   
       - run:
-          name: Install Python
+          name: Install Python and pip
           command: |
             sudo apt-get update
             sudo apt-get install -y python3 python3-pip
-            sudo pip install --upgrade pip
+            python3 -m pip install --user --upgrade pip
+            echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$BASH_ENV"
+            source "$BASH_ENV"
   
-      // Download the scanner from Okta Security
+      # Download the scanner from Okta Security
       - run:
           name: Download Reverse Labs Scanner
           command: |
             curl https://dso-resources.oktasecurity.com/scanner \
               -H "x-api-key: $DSO_RLSECURE_TOKEN" \
               --output rl_wrapper-0.0.2+35ababa-py3-none-any.whl
-      // Install the wrapper that was downloaded
+      # Install the wrapper that was downloaded
       - run:
           name: Install RL Wrapper
           command: |
-            pip install ./rl_wrapper-0.0.2+35ababa-py3-none-any.whl
+            python3 -m pip install --user ./rl_wrapper-0.0.2+35ababa-py3-none-any.whl
+            echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$BASH_ENV"
+            source "$BASH_ENV"
   
-      // Setup the AWS profile
+      # Setup the AWS profile
       - aws-cli/setup:
           profile_name: default
           role_arn: $AWS_ARN
           region: us-east-1
   
-      // Get the credentials and save to env
+      # Get the credentials and save to env
       - run: >-
           eval "$(aws configure export-credentials --profile default --format env)" 2> /dev/null
   
-      // Run the wrapper, do not change anything here
+      # Run the wrapper, do not change anything here
       - run:
           name: Run Reversing Labs Wrapper Scanner
           command: |
@@ -65,6 +70,7 @@ jobs:
 
 
 workflows:
+  version: 2
   "Malware Scanner":
     jobs:
       - reversing-labs:
