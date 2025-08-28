@@ -1,56 +1,70 @@
 version: 2.1
 
 orbs:
+  windows: circleci/windows@5.0
   general-platform-helpers: okta/general-platform-helpers@1.9
+  platform-helpers: okta/platform-helpers@1
   python: circleci/python@2.0.3
   aws-cli: circleci/aws-cli@5.1
 
 jobs:
   reversing-labs:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:6.0
     steps:
-      - checkout
-  
+      - run:
+          name: Manual HTTPS checkout (avoid SSH)
+          command: |
+            git --version
+            rm -rf .git || true
+            git init .
+            git remote add origin https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
+            git fetch --depth=1 origin $CIRCLE_SHA1
+            git checkout --force $CIRCLE_SHA1
+
       - run: dotnet --version
 
-      - run: 
-          name: build Binary to scan
+      - run:
+          name: Build Binary to scan
           command: |
-            dotnet build ./server-side/okta-hosted-login/okta-blazor-server-side-example.sln &&
-            dotnet build ./web-assembly/okta-hosted-login/okta_blazor_web_assembly_example.sln 
+            dotnet build server-side/okta-hosted-login/okta-blazor-server-side-example.sln --configuration Release
+            dotnet build web-assembly/okta-hosted-login/okta_blazor_web_assembly_example.sln --configuration Release
 
-       
-      // Necessary to Install rl wrapper   
+      # Necessary to Install rl wrapper
       - run:
           name: Install Python
           command: |
-            sudo apt-get update
-            sudo apt-get install -y python3 python3-pip
-            sudo pip install --upgrade pip
-  
-      // Download the scanner from Okta Security
+            apt-get update
+            apt-get install -y curl python3 python3-pip unzip
+            pip3 install --upgrade pip
+
+      # Download the scanner from Okta Security
       - run:
           name: Download Reverse Labs Scanner
           command: |
             curl https://dso-resources.oktasecurity.com/scanner \
               -H "x-api-key: $DSO_RLSECURE_TOKEN" \
               --output rl_wrapper-0.0.2+35ababa-py3-none-any.whl
-      // Install the wrapper that was downloaded
+
+      # Install the wrapper that was downloaded
       - run:
           name: Install RL Wrapper
           command: |
-            pip install ./rl_wrapper-0.0.2+35ababa-py3-none-any.whl
-  
-      // Setup the AWS profile
+            pip3 install ./rl_wrapper-0.0.2+35ababa-py3-none-any.whl
+
+      # Setup the AWS profile
       - aws-cli/setup:
           profile_name: default
           role_arn: $AWS_ARN
           region: us-east-1
-  
-      // Get the credentials and save to env
-      - run: >-
-          eval "$(aws configure export-credentials --profile default --format env)" 2> /dev/null
-  
-      // Run the wrapper, do not change anything here
+
+      # Get the credentials and save to env
+      - run:
+          name: Export AWS credentials to environment
+          command: >-
+            eval "$(aws configure export-credentials --profile default --format env)" 2> /dev/null
+
+      # Run the wrapper, do not change anything here
       - run:
           name: Run Reversing Labs Wrapper Scanner
           command: |
@@ -63,6 +77,65 @@ jobs:
               --build-env "circleci" \
               --suppress_output
 
+  build:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:6.0
+    environment:
+      CIRCLE_CI: true
+    steps:
+      - run:
+          name: Manual HTTPS checkout (avoid SSH)
+          command: |
+            set -e
+            git --version || (apt-get update -y && apt-get install -y --no-install-recommends git ca-certificates curl && rm -rf /var/lib/apt/lists/*)
+            rm -rf .git || true
+            git init .
+            git remote add origin https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git
+            git fetch --depth=1 origin $CIRCLE_SHA1
+            git checkout --force $CIRCLE_SHA1
+            git config --global --add safe.directory "$(pwd)"
+      - run:
+          name: Restore solutions
+          command: |
+            dotnet restore server-side/okta-hosted-login/okta-blazor-server-side-example.sln
+            dotnet restore web-assembly/okta-hosted-login/okta_blazor_web_assembly_example.sln
+      - run:
+          name: Build solutions
+          command: |
+            dotnet build server-side/okta-hosted-login/okta-blazor-server-side-example.sln --configuration Release --no-restore
+            dotnet build web-assembly/okta-hosted-login/okta_blazor_web_assembly_example.sln --configuration Release --no-restore
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+
+  snyk-scan-server:
+    docker:
+      - image: cimg/python:3.10
+    working_directory: ~/project/server-side/okta-hosted-login
+    steps:
+      - attach_workspace: # Allows for sharing of build-workspace (containing downloaded dependencies) (optional)
+          at: ~/project
+      - general-platform-helpers/step-load-dependencies
+      - general-platform-helpers/step-run-snyk-monitor:
+          scan-all-projects: true
+          skip-unresolved: false
+          run-on-non-main: true
+          detection-depth: 4
+
+  snyk-scan-webassembly:
+    docker:
+      - image: cimg/python:3.10
+    working_directory: ~/project/web-assembly/okta-hosted-login
+    steps:
+      - attach_workspace: # Allows for sharing of build-workspace (containing downloaded dependencies) (optional)
+          at: ~/project
+      - general-platform-helpers/step-load-dependencies
+      - general-platform-helpers/step-run-snyk-monitor:
+          scan-all-projects: true
+          skip-unresolved: false
+          run-on-non-main: true
+          detection-depth: 4
 
 workflows:
   "Malware Scanner":
@@ -70,10 +143,24 @@ workflows:
       - reversing-labs:
           context:
             - static-analysis
-  # See OKTA-624620
-  semgrep:
+  "Circle CI Build & Snyk Scan":
     jobs:
-      - general-platform-helpers/job-semgrep-scan:
-          name: "Scan with Semgrep"
+      - build
+      - snyk-scan-server:
+          name: execute-snyk-server
           context:
             - static-analysis
+          requires:
+            - build
+      - snyk-scan-webassembly:
+          name: execute-snyk-webassembly
+          context:
+            - static-analysis
+          requires:
+            - build
+  "Semgrep":
+    jobs:
+      - platform-helpers/job-semgrep-scan:
+          context:
+            - static-analysis
+          name: "Scan with Semgrep"          
